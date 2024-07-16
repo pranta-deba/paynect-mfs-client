@@ -30,7 +30,7 @@ const AuthProvider = ({ children }) => {
     console.log(user);
 
     return <AuthContext.Provider
-        value={{ user, setUser }}
+        value={{ user, setUser,userLoader }}
     >{children}</AuthContext.Provider>
 };
 

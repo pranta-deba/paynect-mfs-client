@@ -6,14 +6,18 @@ import { FaHandHoldingHeart } from "react-icons/fa";
 import { RiMobileDownloadFill } from "react-icons/ri";
 import { FaRegLightbulb } from "react-icons/fa";
 import { TbLocationDollar } from "react-icons/tb";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { IoNotificationsOutline } from "react-icons/io5";
 import { MdOutlineMenu } from "react-icons/md";
 import { RiCloseLargeFill } from "react-icons/ri";
+import useAuth from '../../hooks/useAuth';
+import { FaRegUserCircle } from "react-icons/fa";
 
 const Navbar = () => {
+    const { user, setUser } = useAuth();
     const [state, setState] = useState(false)
     const [drapdownState, setDrapdownState] = useState({ isActive: false, idx: null })
+    const navigate = useNavigate();
     const dropdownNavs = [
         {
             navs: [
@@ -69,6 +73,12 @@ const Navbar = () => {
         };
     }, [])
 
+    const handleLogout = () => {
+        setUser(null);
+        localStorage.removeItem('phone');
+        navigate('/');
+    }
+
     return (
         <div>
             <nav className={`relative z-20 bg-white w-full md:static md:text-sm md:border-none ${state ? "shadow-lg rounded-b-xl md:shadow-none" : ""}`}>
@@ -84,20 +94,20 @@ const Navbar = () => {
                             />
                         </Link>
                         <div className="flex items-center md:hidden gap-2">
-                            {/* <div class="flex items-center relative">
-                                <button class="text-[#e52165]">
+                            {user && <div className="flex items-center relative">
+                                <button onClick={() => document.getElementById('my_modal_3').showModal()} className="text-[#e52165]">
                                     <IoNotificationsOutline size={25} />
                                     <span className='absolute w-2 h-2 rounded-full bg-red-600 top-0 right-0 animate-bounce'></span>
                                 </button>
-                            </div> */}
+                            </div>}
                             <button className="text-gray-500 hover:text-gray-800"
                                 onClick={() => setState(!state)}
                             >
                                 {
                                     state ? (
-                                        <RiCloseLargeFill size={30} className='text-[#e52165]'/>
+                                        <RiCloseLargeFill size={30} className='text-[#e52165]' />
                                     ) : (
-                                        <MdOutlineMenu size={30} className='text-[#e52165]'/>
+                                        <MdOutlineMenu size={30} className='text-[#e52165]' />
 
                                     )
                                 }
@@ -165,38 +175,78 @@ const Navbar = () => {
                                     )
                                 })
                             }
-                            <div className='flex-1 items-center justify-end gap-x-6 space-y-3 md:flex md:space-y-0'>
-                                {/* <li>
-                                    <div class="hidden md:flex items-center relative">
-                                        <button class="text-[#e52165]">
-                                            <IoNotificationsOutline size={30} />
-                                            <span className='absolute w-2 h-2 rounded-full bg-red-600 top-0 right-0 animate-bounce'></span>
-                                        </button>
-                                    </div>
-                                </li> */}
-                                <li>
-                                    <Link to={'/login'} className="block py-3 px-4 font-medium text-center text-white bg-[#e52165] hover:bg-[#e52165] active:bg-[#e52165] active:shadow-none rounded-sm shadow md:inline">
-                                        Login
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link to={'/register'} className="block py-3 px-4 font-medium text-center text-white bg-[#e52165] hover:bg-[#e52165] active:bg-[#e52165] active:shadow-none rounded-sm shadow md:inline">
-                                        Register
-                                    </Link>
-                                </li>
+                            <div className='flex-1 items-center justify-end gap-x-4 space-y-3 md:flex md:space-y-0'>
+                                {user && <>
+                                    <li>
+                                        <div className="hidden md:flex items-center relative">
+                                            <button onClick={() => document.getElementById('my_modal_3').showModal()} className="text-[#e52165]">
+                                                <IoNotificationsOutline size={30} />
+                                                <span className='absolute w-2 h-2 rounded-full bg-red-600 top-0 right-0 animate-bounce'></span>
+                                            </button>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div className="dropdown dropdown-end" title={user?.name}>
+                                            <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
+                                                <div className="w-10 rounded-full border-2 border-[#e52165]">
+                                                    {!user?.image && <FaRegUserCircle size={37} className='mx-auto text-[#e52165]' />}
+                                                    {user?.image && <img
+                                                        alt={user?.name}
+                                                        src={user?.image} />}
+                                                </div>
+                                            </div>
+                                            <ul
+                                                tabIndex={0}
+                                                className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
+                                                <li>
+                                                    <Link className="justify-between hover:bg-[#e52165] hover:text-white rounded-none">
+                                                        Profile
+                                                        <span className="badge">New</span>
+                                                    </Link>
+                                                </li>
+                                                <li><Link className='hover:bg-[#e52165] hover:text-white rounded-none'>Settings</Link></li>
+                                                <li><button onClick={handleLogout} className='hover:bg-[#e52165] hover:text-white rounded-none'>Logout</button></li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                </>}
+
+                                {!user && <>
+                                    <li>
+                                        <Link to={'/login'} className="block py-3 px-4 font-medium text-center text-white bg-[#e52165] hover:bg-[#e52165] active:bg-[#e52165] active:shadow-none rounded-sm shadow md:inline">
+                                            Login
+                                        </Link>
+                                    </li>
+                                    <li>
+                                        <Link to={'/register'} className="block py-3 px-4 font-medium text-center text-white bg-[#e52165] hover:bg-[#e52165] active:bg-[#e52165] active:shadow-none rounded-sm shadow md:inline">
+                                            Register
+                                        </Link>
+                                    </li>
+                                </>}
                             </div>
                         </ul>
                     </div>
-                </div>
-            </nav>
+                </div >
+            </nav >
             {
                 state ? (
                     <div
                         className="z-10 fixed top-0 w-screen h-screen bg-black/20 backdrop-blur-sm md:hidden"
-                        onClick={() => setState(false)}></div>
+                        onClick={() => setState(false)}></div >
                 ) : ""
             }
-        </div>
+
+            <dialog id="my_modal_3" className="modal">
+                <div className="modal-box">
+                    <form method="dialog">
+                        {/* if there is a button in form, it will close the modal */}
+                        <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+                    </form>
+                    <h3 className="font-bold text-lg">Hello!</h3>
+                    <p className="py-4">Press ESC key or click on ✕ button to close</p>
+                </div>
+            </dialog>
+        </div >
     );
 };
 
