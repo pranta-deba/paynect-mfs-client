@@ -7,6 +7,9 @@ import { RiMobileDownloadFill } from "react-icons/ri";
 import { FaRegLightbulb } from "react-icons/fa";
 import { TbLocationDollar } from "react-icons/tb";
 import { Link } from "react-router-dom";
+import { IoNotificationsOutline } from "react-icons/io5";
+import { MdOutlineMenu } from "react-icons/md";
+import { RiCloseLargeFill } from "react-icons/ri";
 
 const Navbar = () => {
     const [state, setState] = useState(false)
@@ -80,19 +83,21 @@ const Navbar = () => {
                                 className=''
                             />
                         </Link>
-                        <div className="md:hidden">
+                        <div className="flex items-center md:hidden gap-2">
+                            {/* <div class="flex items-center relative">
+                                <button class="text-[#e52165]">
+                                    <IoNotificationsOutline size={25} />
+                                    <span className='absolute w-2 h-2 rounded-full bg-red-600 top-0 right-0 animate-bounce'></span>
+                                </button>
+                            </div> */}
                             <button className="text-gray-500 hover:text-gray-800"
                                 onClick={() => setState(!state)}
                             >
                                 {
                                     state ? (
-                                        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
-                                            <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
-                                        </svg>
+                                        <RiCloseLargeFill size={30} className='text-[#e52165]'/>
                                     ) : (
-                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
-                                            <path fillRule="evenodd" d="M3 6.75A.75.75 0 013.75 6h16.5a.75.75 0 010 1.5H3.75A.75.75 0 013 6.75zM3 12a.75.75 0 01.75-.75h16.5a.75.75 0 010 1.5H3.75A.75.75 0 013 12zm8.25 5.25a.75.75 0 01.75-.75h8.25a.75.75 0 010 1.5H12a.75.75 0 01-.75-.75z" clipRule="evenodd" />
-                                        </svg>
+                                        <MdOutlineMenu size={30} className='text-[#e52165]'/>
 
                                     )
                                 }
@@ -161,6 +166,19 @@ const Navbar = () => {
                                 })
                             }
                             <div className='flex-1 items-center justify-end gap-x-6 space-y-3 md:flex md:space-y-0'>
+                                {/* <li>
+                                    <div class="hidden md:flex items-center relative">
+                                        <button class="text-[#e52165]">
+                                            <IoNotificationsOutline size={30} />
+                                            <span className='absolute w-2 h-2 rounded-full bg-red-600 top-0 right-0 animate-bounce'></span>
+                                        </button>
+                                    </div>
+                                </li> */}
+                                <li>
+                                    <Link to={'/login'} className="block py-3 px-4 font-medium text-center text-white bg-[#e52165] hover:bg-[#e52165] active:bg-[#e52165] active:shadow-none rounded-sm shadow md:inline">
+                                        Login
+                                    </Link>
+                                </li>
                                 <li>
                                     <Link to={'/register'} className="block py-3 px-4 font-medium text-center text-white bg-[#e52165] hover:bg-[#e52165] active:bg-[#e52165] active:shadow-none rounded-sm shadow md:inline">
                                         Register

@@ -1,11 +1,14 @@
 import { initializeApp } from "firebase/app";
+import { getAuth } from "firebase/auth";
+
 const firebaseConfig = {
-  apiKey: "AIzaSyCR1CEi556IQA92Gw2DaXwI2UyIi8kSF5I",
-  authDomain: "paynect-mfs.firebaseapp.com",
-  projectId: "paynect-mfs",
-  storageBucket: "paynect-mfs.appspot.com",
-  messagingSenderId: "991016008590",
-  appId: "1:991016008590:web:edbdc46bdd43ef93c342df"
+  apiKey: import.meta.env.VITE_apiKey,
+  authDomain: import.meta.env.VITE_authDomain,
+  projectId: import.meta.env.VITE_projectId,
+  storageBucket: import.meta.env.VITE_storageBucket,
+  messagingSenderId: import.meta.env.VITE_messagingSenderId,
+  appId: import.meta.env.VITE_appId,
 };
 
 const app = initializeApp(firebaseConfig);
+export const auth = getAuth(app);
