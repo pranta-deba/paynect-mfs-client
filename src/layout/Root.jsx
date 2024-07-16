@@ -5,14 +5,14 @@ import useAuth from "../hooks/useAuth";
 import Loader from "../components/Loader/Loader";
 
 const Root = () => {
-    const {userLoader} = useAuth();
+    const { userLoader } = useAuth();
     if (userLoader) {
-        return <Loader/>
+        return <Loader />
     }
     return (
         <>
             <Navbar />
-            <main className="mx-auto md:max-w-screen-xl px-4 lg:px-8 min-h-[calc(100vh-579.587px)]">
+            <main className="md:max-w-screen-xl mx-auto px-4 lg:px-8 md:min-h-[calc(100vh-579.587px)]">
                 <Outlet />
             </main>
             <Footer />

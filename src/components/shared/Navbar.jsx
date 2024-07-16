@@ -119,7 +119,7 @@ const Navbar = () => {
                             {
                                 navigation.map((item, idx) => {
                                     return (
-                                        <li key={idx}>
+                                        <li key={idx} className='z-50'>
                                             {
                                                 item.isDrapdown ? (
                                                     <button className="w-full flex items-center justify-between gap-1 text-[#0d1137] hover:text-[#e52165]"
