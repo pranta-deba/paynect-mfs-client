@@ -88,14 +88,19 @@ const Register = () => {
                     email,
                     pin,
                     phone: ph,
-                    role: 'user'
+                    role: 'user',
+                    bal: 0,
+                    image: null
                 })
                 if (data.insertedId) {
                     setUser({
                         name,
                         email,
                         phone: ph,
-                        role: 'user'
+                        role: 'user',
+                        bal: 0,
+                        image: null,
+                        status: false,
                     });
                     localStorage.setItem('phone', ph);
                     toast.success('Registration Successful');
@@ -113,7 +118,7 @@ const Register = () => {
     return (
         <div>
             <div id='recaptcha-container'></div>
-            <div className="w-full my-20 md:my-28 flex flex-col items-center justify-center px-4">
+            <div className="w-full my-12 flex flex-col items-center justify-center px-4">
                 <div className="max-w-sm w-full text-gray-600 space-y-8">
                     <div className="text-center">
                         <img

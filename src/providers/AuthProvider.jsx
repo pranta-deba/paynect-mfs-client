@@ -5,6 +5,7 @@ export const AuthContext = createContext(null)
 const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
     const [userLoader, setUserLoader] = useState(true);
+    const [refetchUser, setRefetchUser] = useState(true);
 
     useEffect(() => {
         const currentUserNumber = localStorage.getItem("phone") || "";
@@ -24,13 +25,13 @@ const AuthProvider = ({ children }) => {
             setUserLoader(false);
             localStorage.removeItem('token');
         }
-    }, []);
+    }, [refetchUser]);
 
 
     console.log(user);
 
     return <AuthContext.Provider
-        value={{ user, setUser,userLoader }}
+        value={{ user, setUser, userLoader, refetchUser, setRefetchUser }}
     >{children}</AuthContext.Provider>
 };
 

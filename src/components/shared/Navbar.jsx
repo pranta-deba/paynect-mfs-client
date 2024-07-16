@@ -77,6 +77,7 @@ const Navbar = () => {
         setUser(null);
         localStorage.removeItem('phone');
         navigate('/');
+        window.location.reload();
     }
 
     return (
@@ -186,7 +187,7 @@ const Navbar = () => {
                                         </div>
                                     </li>
                                     <li>
-                                        <div className="dropdown dropdown-end" title={user?.name}>
+                                        <div className="dropdown dropdown-end z-[70]" title={user?.name}>
                                             <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
                                                 <div className="w-10 rounded-full border-2 border-[#e52165]">
                                                     {!user?.image && <FaRegUserCircle size={37} className='mx-auto text-[#e52165]' />}

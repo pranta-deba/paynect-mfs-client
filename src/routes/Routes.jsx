@@ -4,6 +4,8 @@ import Error from "../pages/Error/Error";
 import Home from "../pages/Home/Home";
 import Login from "../pages/Authentication/Login";
 import Register from "../pages/Authentication/Register";
+import Private from "./Private";
+import SendMoney from "../pages/SendMoney/SendMoney";
 
 export const router = createBrowserRouter([
     {
@@ -14,12 +16,13 @@ export const router = createBrowserRouter([
             { path: "/", element: <Home /> },
             { path: "/who-we-are", element: 'who-we-are' },
             { path: "/branch", element: 'branch' },
-            { path: "/send-money", element: 'send money' },
-            { path: "/cash-out", element: 'cash-out' },
-            { path: "/pay-bill", element: 'pay-bill' },
-            { path: "/mobile-recharge", element: 'mobile-recharge' },
-            { path: "/paynect-to-bank", element: 'paynect-to-bank' },
-            { path: "/loan", element: 'loan' },
+            { path: "/send-money", element: <Private><SendMoney /></Private> },
+            { path: "/cash-out", element: <Private>'cash-out'</Private> },
+            { path: "/cash-in", element: <Private>'cash-in'</Private> },
+            { path: "/pay-bill", element: <Private>'pay-bill'</Private> },
+            { path: "/mobile-recharge", element: <Private>'mobile-recharge'</Private> },
+            { path: "/paynect-to-bank", element: <Private>'paynect-to-bank'</Private> },
+            { path: "/loan", element: <Private>'loan'</Private> },
             { path: "/login", element: <Login /> },
             { path: "/register", element: <Register /> },
         ],
