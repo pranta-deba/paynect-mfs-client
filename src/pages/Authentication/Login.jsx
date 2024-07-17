@@ -10,7 +10,7 @@ const Login = () => {
     const [ph, setPh] = useState("");
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate()
-    const {setUser} = useAuth();
+    const { setUser } = useAuth();
 
 
     const handleEmailSubmit = async (e) => {
@@ -87,6 +87,7 @@ const Login = () => {
                             </div>
                         </div>
                         <button
+                            disabled={loading}
                             className="flex items-center justify-center gap-2  w-full mt-4 px-4 py-2 text-white font-medium bg-[#e52165] hover:bg-[#e52165B3] active:bg-[#e52165] rounded-lg duration-150" type='submit'
                         >
                             {

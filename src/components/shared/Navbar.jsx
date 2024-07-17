@@ -124,7 +124,7 @@ const Navbar = () => {
                                             {
                                                 item.isDrapdown ? (
                                                     <>
-                                                        {user.role !== "admin" && <button className="w-full flex items-center justify-between gap-1 text-[#0d1137] hover:text-[#e52165]"
+                                                        <button className="w-full flex items-center justify-between gap-1 text-[#0d1137] hover:text-[#e52165]"
                                                             onClick={() => setDrapdownState({ idx, isActive: !drapdownState.isActive })}
                                                         >
                                                             {item.title}
@@ -140,7 +140,7 @@ const Navbar = () => {
                                                                     </svg>
                                                                 )
                                                             }
-                                                        </button>}
+                                                        </button>
                                                     </>
                                                 ) : (
                                                     <Link to={item.path} className="block text-[#0d1137] hover:text-[#e52165]">
