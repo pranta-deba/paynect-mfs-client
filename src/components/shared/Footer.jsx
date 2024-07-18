@@ -1,7 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import useAuth from '../../hooks/useAuth';
 
 const Footer = () => {
+    const { user } = useAuth()
     return (
         <footer className="bg-[#0d1137] text-white">
             <div className="mx-auto max-w-screen-xl space-y-8 px-4 py-12 sm:px-6 lg:space-y-16 lg:px-8">
@@ -32,7 +34,7 @@ const Footer = () => {
                     </ul>
                 </div>
 
-                <div
+                {!user && <div
                     className="grid grid-cols-1 gap-8 border-t border-gray-100 pt-8 sm:grid-cols-2 lg:grid-cols-4 lg:pt-12"
                 >
                     <div className='text-gray-300'>
@@ -96,9 +98,10 @@ const Footer = () => {
                             </li>
                         </ul>
                     </div>
-                </div>
+                </div>}
 
-                <p className="text-xs text-gray-500">&copy; {new Date().getFullYear()}. Paynect. All rights reserved.</p>
+                {!user && <p className="text-xs text-gray-500">&copy; {new Date().getFullYear()}. Paynect. All rights reserved.</p>}
+                {user && <p className="text-center text-xs text-gray-500">&copy; {new Date().getFullYear()}. Paynect. All rights reserved.</p>}
             </div>
         </footer>
     );

@@ -12,7 +12,7 @@ const Root = () => {
     return (
         <>
             <Navbar />
-            <main className="md:max-w-screen-xl mx-auto px-4 lg:px-8 md:min-h-[calc(100vh-579.587px)]">
+            <main className="md:max-w-screen-xl mx-auto px-4 lg:px-8 md:min-h-screen">
                 <Outlet />
             </main>
             <Footer />

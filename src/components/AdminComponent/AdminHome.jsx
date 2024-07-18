@@ -7,6 +7,7 @@ import { MdSupportAgent } from "react-icons/md";
 import { BiTransfer } from "react-icons/bi";
 import SectionTitle from '../SectionTitle/SectionTitle';
 import axios from 'axios';
+import toast from 'react-hot-toast';
 
 
 const AdminHome = () => {
@@ -14,8 +15,11 @@ const AdminHome = () => {
     const [check, setCheck] = useState(false);
     const [transitions, setTransitions] = useState([]);
     const [users, setUsers] = useState([]);
+    const [temUsers, setTemUsers] = useState([]);
     const [transitionLoader, setTransitionLoader] = useState(true);
+    const [changeStatusLoader, setChangeStatusLoader] = useState(false);
     const [size, setSize] = useState(10);
+    const [refetchUser, setRefetchUser] = useState(true);
     const handleBal = () => {
         setCheck(true);
         setTimeout(() => {
@@ -28,7 +32,7 @@ const AdminHome = () => {
     }, [])
     useEffect(() => {
         loadUsers();
-    }, [])
+    }, [refetchUser])
 
     const loadAllTransitions = async () => {
         try {
@@ -46,6 +50,7 @@ const AdminHome = () => {
         try {
             const { data } = await axios.get('http://localhost:5000/admin/all-users');
             setUsers(data);
+            setTemUsers(data);
         } catch (error) {
             console.error(error);
         }
@@ -56,8 +61,43 @@ const AdminHome = () => {
     const handleSearch = e => {
         e.preventDefault();
         const name = e.target.name.value;
-        const role = e.target.role.value;
-        console.log({ name, role });
+        if (name === "") {
+            setUsers(temUsers);
+            return;
+        }
+        const res = temUsers.filter(user => user.name.toLowerCase().includes(name.toLowerCase()));
+        setUsers(res);
+    }
+    const handleSort = e => {
+        const val = e.target.value;
+        if (val === 'all') {
+            setUsers(temUsers);
+        } else if (val === 'user') {
+            const res = temUsers.filter(user => user.role === 'user');
+            setUsers(res);
+        } else if (val === 'admin') {
+            const res = temUsers.filter(user => user.role === 'admin');
+            setUsers(res);
+        } else if (val === 'agent') {
+            const res = temUsers.filter(user => user.role === 'agent');
+            setUsers(res);
+        }
+    }
+
+    const handleStatus = async (status, id) => {
+        setChangeStatusLoader(true);
+        try {
+            const { data } = await axios.patch('http://localhost:5000/admin/change-status', { status, id });
+            if (data.modifiedCount > 0) {
+                setRefetchUser(!refetchUser);
+                setChangeStatusLoader(false);
+            } else {
+                toast.error('Something went wrong, try again!')
+                setChangeStatusLoader(false);
+            }
+        } catch (error) {
+            setChangeStatusLoader(false);
+        }
     }
     return (
         <>
@@ -82,7 +122,7 @@ const AdminHome = () => {
             </div>
             <div>
                 <SectionTitle title='All Transactions' />
-                <div className='min-h-[300px]'>
+                <div className='min-h-[200px]'>
                     <div className="p-2 mx-auto  dark:text-gray-800">
                         <div className="overflow-x-auto rounded-xl">
                             <table className="min-w-full text-xs">
@@ -149,9 +189,9 @@ const AdminHome = () => {
                     </div>}
                 </div>
             </div>
-            <div>
+            <div className='mb-12'>
                 <SectionTitle title='User List' />
-                <div className='min-h-[300px] my-4'>
+                <div className='min-h-[200px] my-4'>
                     <div className='flex justify-center'>
                         <form onSubmit={handleSearch} className="join flex flex-wrap gap-2 md:gap-0">
                             <div className="w-full sm:w-auto">
@@ -159,7 +199,7 @@ const AdminHome = () => {
                                     <input name='name' className="input input-bordered join-item w-full sm:w-auto rounded-none" placeholder="User Name" />
                                 </div>
                             </div>
-                            <select name='role' className="select select-bordered join-item w-full sm:w-auto">
+                            <select onChange={handleSort} name='role' className="select select-bordered join-item w-full sm:w-auto">
                                 <option value={'all'}>All</option>
                                 <option value={'user'}>User</option>
                                 <option value={'agent'}>Agent</option>
@@ -174,22 +214,29 @@ const AdminHome = () => {
                         <ul className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
                             {
                                 users.map((u) => (
-                                    <li key={u._id} className="flex gap-4 items-center py-2 rounded-lg shadow-xl">
+                                    <li key={u._id} className="relative flex gap-4 items-center py-2 rounded-lg shadow-xl border">
+                                        <span
+                                            className={`absolute top-1 right-2 font-bold text-[10px] 
+                                        ${u?.role === "user" ? "text-blue-800" : ""}
+                                        ${u?.role === "agent" ? "text-green-800" : ""}
+                                        ${u?.role === "admin" ? "text-red-800" : ""}
+                                        `}
+                                        >{u?.role}</span>
                                         <div className="flex items-center justify-center w-24 h-24">
-                                            {/* <img
-                                                src=""
+                                            {u?.image ? <img
+                                                src={u?.image}
                                                 className="w-full h-full rounded-full"
                                                 alt="ddd"
-                                            /> */}
-                                            <FaUser size={70} />
+                                            /> :
+                                                <FaUser size={70} />}
                                         </div>
                                         <div>
                                             <h4 className="text-gray-700 font-semibold sm:text-lg">{u?.name}</h4>
                                             <p className="text-indigo-600">+{u?.phone}</p>
-                                            <div className="mt-3 flex gap-4 text-gray-400">
-                                                <button className='bg-[#e52165] text-white px-2 rounded-md hover:shadow-xl'>Block</button>
-                                                <button className='bg-green-600 text-white px-2 rounded-md hover:shadow-xl'>Activated</button>
-                                            </div>
+                                            {u?.status && <div className="mt-3 flex gap-4 text-gray-400">
+                                                {u?.status === "verified" ? <button onClick={() => handleStatus('block', u?._id)} disabled={changeStatusLoader} className='bg-[#e52165] text-white px-2 rounded-md hover:shadow-xl'>Block</button> :
+                                                    <button onClick={() => handleStatus('verified', u?._id)} disabled={changeStatusLoader} className='bg-green-600 text-white px-2 rounded-md hover:shadow-xl'>Activated</button>}
+                                            </div>}
                                         </div>
                                     </li>
                                 ))

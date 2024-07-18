@@ -31,7 +31,7 @@ const AuthProvider = ({ children }) => {
     console.log(user);
 
     return <AuthContext.Provider
-        value={{ user, setUser, userLoader, refetchUser, setRefetchUser }}
+        value={{ user, setUser, userLoader, refetchUser, setRefetchUser,setUserLoader }}
     >{children}</AuthContext.Provider>
 };
 

@@ -20,11 +20,11 @@ const Home = () => {
                 </>
             }
             {
-                user && user.role === "user" || user && user.role === "agent" || !user && <>
+                !user && <>
                     <Banner />
                 </>
             }
-            <Solutions />
+            {!user && <Solutions />}
         </div>
     );
 };
