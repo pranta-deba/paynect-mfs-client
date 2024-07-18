@@ -129,7 +129,7 @@ const Register = () => {
                             className='mx-auto'
                         />
                         <div className="mt-5 space-y-2">
-                            <h3 className="text-gray-800 text-2xl font-bold sm:text-3xl">Register to your account</h3>
+                            <h3 className="text-gray-800 text-2xl font-bold sm:text-3xl">Register to new account</h3>
                             <p className="">Already Registered account? <Link to="/login" className="font-medium text-[#e52165] hover:text-[#e52165B3]">Login</Link></p>
                         </div>
                     </div>

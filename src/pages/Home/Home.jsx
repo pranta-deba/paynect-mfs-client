@@ -4,6 +4,7 @@ import Solutions from '../../components/homeComponents/Solutions';
 import useAuth from '../../hooks/useAuth';
 import Navigation from '../../components/userComponent/Navigation';
 import AdminHome from '../../components/AdminComponent/AdminHome';
+import UserHome from '../../components/userComponent/UserHome';
 
 const Home = () => {
     const { user } = useAuth();
@@ -12,6 +13,7 @@ const Home = () => {
             {
                 user && user.role === "user" && <>
                     <Navigation />
+                    <UserHome />
                 </>
             }
             {

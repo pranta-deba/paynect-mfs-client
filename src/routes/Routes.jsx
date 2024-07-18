@@ -6,6 +6,7 @@ import Login from "../pages/Authentication/Login";
 import Register from "../pages/Authentication/Register";
 import Private from "./Private";
 import SendMoney from "../pages/SendMoney/SendMoney";
+import CashOut from "../pages/CashOut/CashOut";
 
 export const router = createBrowserRouter([
     {
@@ -17,7 +18,7 @@ export const router = createBrowserRouter([
             { path: "/who-we-are", element: 'who-we-are' },
             { path: "/branch", element: 'branch' },
             { path: "/send-money", element: <Private><SendMoney /></Private> },
-            { path: "/cash-out", element: <Private>'cash-out'</Private> },
+            { path: "/cash-out", element: <Private><CashOut/></Private> },
             { path: "/cash-in", element: <Private>'cash-in'</Private> },
             { path: "/pay-bill", element: <Private>'pay-bill'</Private> },
             { path: "/mobile-recharge", element: <Private>'mobile-recharge'</Private> },

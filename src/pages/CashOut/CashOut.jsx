@@ -6,11 +6,11 @@ import toast from 'react-hot-toast';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
-const SendMoney = () => {
+const CashOut = () => {
     const { user, refetchUser, setRefetchUser } = useAuth();
     const navigate = useNavigate()
-    const [ph, setPh] = useState("");
     const [loading, setLoading] = useState(false);
+    const [ph, setPh] = useState("");
 
     const handleSendMoney = async (e) => {
         setLoading(true);
@@ -19,16 +19,14 @@ const SendMoney = () => {
         const from = user?.phone;
         const amount = e.target.amount.value;
         const pin = e.target.pin.value;
-
         if (user?.status === 'pending') {
             setLoading(false)
             return toast.error("It will take 1 hr to activate your account. please wait..");
         }
-        if (user?.status === 'block' ) {
+        if (user?.status === 'block') {
             setLoading(false)
             return toast.error("Your account is blocked. Please contact a service administrator!");
         }
-
         if (to === '' || amount === '' || pin === '' || amount < 0) {
             setLoading(false)
             return toast.error("Input field is required");
@@ -40,16 +38,17 @@ const SendMoney = () => {
             return toast.error('Phone number must be at least 13 characters!');
         } else if (parseInt(amount) < 50) {
             setLoading(false)
-            return toast.error('Send Money should be at least 50!');
-        } else if (parseInt(user?.bal) === 0 || parseInt(user?.bal) < parseInt(amount)) {
+            return toast.error('Cash out should be at least 50!');
+        } else if (parseInt(user?.bal) === 0 ||
+            parseInt(user?.bal) < parseInt(amount) ||
+            Math.round(parseInt(amount) * 1.5 / 100) + parseInt(amount) > parseInt(user?.bal)) {
             setLoading(false)
             return toast.error('Insufficient balance!');
         }
-
         try {
-            const { data } = await axios.post('http://localhost:5000/transaction/send-money', { to, pin, from, amount });
+            const { data } = await axios.post('http://localhost:5000/transaction/cash-out', { to, pin, from, amount });
             if (data.insertedId) {
-                toast.success('Money sent successfully!');
+                toast.success('Cash out successfully!');
                 setLoading(false);
                 setRefetchUser(!refetchUser);
                 navigate('/');
@@ -62,7 +61,6 @@ const SendMoney = () => {
             setLoading(false)
         }
     }
-
     return (
         <div>
             <div className="w-full my-12 flex flex-col items-center justify-center px-4">
@@ -76,7 +74,7 @@ const SendMoney = () => {
                             className='mx-auto'
                         />
                         <div className="mt-5 space-y-2">
-                            <h3 className="text-gray-800 text-2xl font-bold sm:text-3xl">Send Money</h3>
+                            <h3 className="text-gray-800 text-2xl font-bold sm:text-3xl">Cash out</h3>
                         </div>
                     </div>
                     <form onSubmit={handleSendMoney}
@@ -84,7 +82,7 @@ const SendMoney = () => {
                         <div className='bg-[#e52165] p-4 space-y-3'>
                             <div>
                                 <label className="font-medium text-white">
-                                    Enter a personal account number
+                                    Enter a agent number
                                 </label>
                                 <div>
                                     <PhoneInput country={"bd"} value={ph} onChange={setPh} />
@@ -132,4 +130,4 @@ const SendMoney = () => {
     );
 };
 
-export default SendMoney;
+export default CashOut;

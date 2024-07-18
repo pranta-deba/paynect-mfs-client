@@ -17,7 +17,7 @@ const Navigation = () => {
     }
     return (
         <div className='my-12 flex justify-between items-center flex-wrap gap-4' >
-            <div className='flex-1 text-center md:text-start'>
+            <div className='flex-1 flex justify-center md:justify-start md:text-start'>
                 <button onClick={handleBal} className='py-2 overflow-hidden font-bold rounded-xl flex items-center justify-center text-[#e52165] hover:border hover:border-[#e52165] w-[180px]'>
                     <FaBangladeshiTakaSign size={20} />
                     {check ? user?.bal ? user?.bal : 0 : "Check Balance"}

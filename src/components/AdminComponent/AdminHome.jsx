@@ -37,7 +37,7 @@ const AdminHome = () => {
     const loadAllTransitions = async () => {
         try {
             const { data } = await axios.get('http://localhost:5000/admin/all-transitions');
-            const result = data.sort((a, b) => b - a);
+            const result = data.sort((a, b) => b.date - a.date);
             setTransitions(result);
             setTransitionLoader(false);
         } catch (error) {
