@@ -5,6 +5,7 @@ import useAuth from '../../hooks/useAuth';
 import Navigation from '../../components/userComponent/Navigation';
 import AdminHome from '../../components/AdminComponent/AdminHome';
 import UserHome from '../../components/userComponent/UserHome';
+import AgentHome from '../../components/AgentComponent/AgentHome';
 
 const Home = () => {
     const { user } = useAuth();
@@ -19,6 +20,11 @@ const Home = () => {
             {
                 user && user.role === "admin" && <>
                     <AdminHome />
+                </>
+            }
+            {
+                user && user.role === "agent" && <>
+                    <AgentHome />
                 </>
             }
             {

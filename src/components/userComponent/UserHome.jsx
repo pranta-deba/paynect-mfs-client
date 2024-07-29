@@ -14,7 +14,6 @@ const UserHome = () => {
         setTransitionLoader(true);
         if (user) {
             loadAllTransitions();
-            console.log(6);
         }
     }, [user])
 

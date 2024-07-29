@@ -1,9 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import useAuth from '../../hooks/useAuth';
 
 const Footer = () => {
-    const { user } = useAuth()
     return (
         <footer className="bg-[#0d1137] text-white">
             <div className="mx-auto max-w-screen-xl space-y-8 px-4 py-12 sm:px-6 lg:space-y-16 lg:px-8">
@@ -22,14 +20,14 @@ const Footer = () => {
 
                     <ul className="mt-8 flex justify-center md:justify-start gap-6 sm:mt-0 sm:justify-end">
                         <li>
-                            <Link>
+                            <a>
                                 <img src="./playstore.svg" alt="" title='Get Paynect app on Google Play' />
-                            </Link>
+                            </a>
                         </li>
                         <li>
-                            <Link>
+                            <a>
                                 <img src="./applestore.svg" alt="" title='Get Paynect app on Google Play' />
-                            </Link>
+                            </a>
                         </li>
                     </ul>
                 </div>
