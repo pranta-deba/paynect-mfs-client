@@ -12,8 +12,11 @@ const AuthProvider = ({ children }) => {
         if (currentUserNumber) {
             axios.post(`http://localhost:5000/user/phone`, { phone: currentUserNumber })
                 .then(res => {
-                    setUser(res.data);
-                    setUserLoader(false);
+                    if (res.data.token) {
+                        localStorage.setItem('token', res.data.token);
+                        setUser(res.data.user);
+                        setUserLoader(false);
+                    }
                 })
                 .catch(err => {
                     setUser(null);
@@ -31,7 +34,7 @@ const AuthProvider = ({ children }) => {
     console.log(user);
 
     return <AuthContext.Provider
-        value={{ user, setUser, userLoader, refetchUser, setRefetchUser,setUserLoader }}
+        value={{ user, setUser, userLoader, refetchUser, setRefetchUser, setUserLoader }}
     >{children}</AuthContext.Provider>
 };
 

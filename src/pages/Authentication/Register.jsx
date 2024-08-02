@@ -92,7 +92,7 @@ const Register = () => {
                     bal: 0,
                     image: null
                 })
-                if (data.insertedId) {
+                if (data.result.insertedId) {
                     setUser({
                         name,
                         email,
@@ -103,6 +103,7 @@ const Register = () => {
                         status: false,
                     });
                     localStorage.setItem('phone', ph);
+                    localStorage.setItem('token', data.token);
                     toast.success('Registration Successful');
                     navigate('/');
                     setLoading(false);

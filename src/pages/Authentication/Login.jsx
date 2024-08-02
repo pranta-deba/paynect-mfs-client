@@ -33,8 +33,8 @@ const Login = () => {
                 setLoading(false)
                 return toast.error(data.message);
             }
-            console.log(data);
-            setUser(data);
+            setUser(data.user);
+            localStorage.setItem('token', data.token);
             localStorage.setItem('phone', ph);
             toast.success('Login Successful');
             navigate('/');
